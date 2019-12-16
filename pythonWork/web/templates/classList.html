@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+{% load static from staticfiles %}
+<html>
+<head>
+	<title>目录</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/classList_css.css' %}">
+</head>
+<body>
+	<div class="list_top">
+		<img src="{% static 'image/scribe_banner10.png' %}">
+	</div>
+	<div class="list_content">
+ 		{% for x in classes %}
+		<div class="list_div">
+			<a href="{% url 'classDetails' %}/?detailid={{ x.list_url }}">
+				<table>
+					<th><img src="{% static 'image/' %}{{ x.list_img }}"></th>
+					<th>
+						<div>
+							{{ x.list_name }}
+						</div>
+						<div>
+							{{ x.list_text }}
+						</div>
+					</th>
+				</table>	
+			</a>
+		</div>
+		{% endfor %}
+	</div>
+	<div class="list_foot" style="position:fixed;bottom:0;">
+		<a href="http://www.zzwg.art/topic?user_id=5d3d58385e51a04d523ae183">
+			<h2 style="color: white;text-align: center;line-height: 10px;">打卡分享</h2>
+		</a>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% load static from staticfiles %}
+<html>
+<head>
+	<title>课程详情</title>
+	<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/classList_css.css' %}">
+	<script type="text/javascript" src="{% static 'js/jquery-1.8.3.min.js' %}"></script>
+	<link rel="stylesheet" type="text/css" href="{% static 'css/classDetails_css.css' %}">
+</head>
+<body>
+	<div class="list_top">
+		<img src="{% static 'image/scribe_banner10.png' %}">
+	</div>
+	<div class="details_contents">
+	</div>
+	<script type="text/javascript">
+		var p = 0;
+		video_list(p);
+		$(document).scroll(function(){
+			// 获取文档的总高度
+			var DW = $(document).height();
+			console.log(DW);
+			// 获取文档的偏移位置 
+			var sT = $(document).scrollTop();
+			console.log(sT);
+			// 浏览器窗口的高度
+			var WW = $(window).height();
+			console.log(WW);
+			// 判断是否触底 文档的偏移位置+窗口的高度==文档的高度
+			if(DW-(sT+WW)<1){
+			// 重新加载新数据 带哦用封装的ajax
+				p++;
+				video_list(p)
+				}
+		})
+		function video_list(p){
+			$.get('{% url 'videos' %}',{detail_id:'{{ detail_id }}',page:p},function(data){
+			// console.log(data['detail_video']);
+			$('.details_contents').append('<video autoplay="autoplay" controls="controls"><source src="{% static 'image/' %}/'+data['detail_video']+'"></source></video>');
+			},'json')
+		}
+		
+	 </script>
+	<div class="list_foot" style="position:fixed;bottom:0;">
+		<a href="http://www.zzwg.art/topic?user_id=5d3d58385e51a04d523ae183">
+			<h2 style="color: white;text-align: center;line-height: 10px;">打卡分享</h2>
+		</a>
+		
+	</div>
+</body>
+</html>

@@ -1,0 +1,126 @@
+{% extends "myadmin_templates/index.html" %}
+{% block title %}
+    <title>课程视频</title>
+{% endblock %}
+
+
+{% block con %}
+<div class="row-content am-cf">
+    <div class="row">
+        <div class="am-u-sm-12 am-u-md-12 am-u-lg-12">
+            <div class="widget am-cf">
+
+                <div class="widget-head am-cf">
+                    <div class="widget-title am-fl">
+                        视频添加
+                    </div>
+                    <div class="widget-function am-fr">
+                        <a href="javascript:;" class="am-icon-cog">
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body am-fr">
+                    <form action="{% url 'myadmin_lists_num' %}" method="POST" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                        {% csrf_token %}
+                        
+                        <div class="am-form-group">
+                            <label for="user-name" class="am-u-sm-3 am-form-label">
+                                视频数量
+                            </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="num" class="tpl-form-input" 
+                                 placeholder="{{ num }}">
+                            </div>
+                        </div>
+                        <div class="am-form-group" style="visibility: hidden;">
+                            <div class="am-u-sm-9">
+                                <input type="text" name="id" class="tpl-form-input" 
+                                 value="{{ id }}">
+                            </div>
+                        </div>
+
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button id="but" class="am-btn am-btn-primary tpl-btn-bg-color-success ">
+                                    提交
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                    <script>
+                        $('#but').on(function(){
+                            console.log('ddd')
+                            var zhi = $("input[name='id']").val()
+                            if (zhi == '') {
+                                history.back(-3);
+                            }
+                        })
+                            
+                            
+                    </script>
+                    <form action="{% url 'myadmin_show_video' %}" method="POST" enctype="multipart/form-data" class="am-form tpl-form-line-form">
+                        {% csrf_token %}
+                        <div class="am-form-group">
+                          <label for="user-weibo" class="am-u-sm-3 am-form-label"> 
+                            课程视频
+                          </label>
+                          <div class="am-u-sm-9" id='addvideo'>
+                              <!-- <div class="am-form-group am-form-file">
+                                  <div class="tpl-form-file-img">
+                                      <video  controls="controls" id="showvideo" style="width: 200px;" src=" "></video>
+                                  </div>
+                                  <button type="button" class="am-btn am-btn-danger am-btn-sm">
+                                    <i class="am-icon-cloud-upload"></i> 添加视频</button>
+                                  <input id="ReadFile" name="detail_video" type="file" multiple="">
+                              </div> -->
+                          </div>
+                        </div>
+                        <div class="am-form-group" style="visibility: hidden;">
+                            <div class="am-u-sm-9">
+                                <input type="text" name="num" class="tpl-form-input" 
+                                 value="{{ num }}">
+                            </div>
+                        </div>
+                        <div class="am-form-group" >
+                          <label for="user-weibo" class="am-u-sm-3 am-form-label"> 
+                            课程编号
+                          </label>
+                            <div class="am-u-sm-9">
+                                <input type="text" name="detail_id" class="tpl-form-input" 
+                                 value="{{ detail_id }}">
+                            </div>
+                        </div>
+                        <script type="text/javascript">
+                          for (var i = 0; i < {{ num }}; i++) {
+                            $('#addvideo').append('<div class="am-form-group am-form-file"><div class="tpl-form-file-img"><video  controls="controls" id="showvideo" style="width: 200px;" src=" "></video></div><button type="button" class="am-btn am-btn-danger am-btn-sm"><i class="am-icon-cloud-upload"></i> 添加视频</button><input id="ReadFile" name="detail_video'+i+'" type="file" multiple=""></div>')
+                            var a = '#showvideo'
+                            var b = '#ReadFile'
+                            console.log(a,b);
+                            $(b).on('change',function(){
+                                var file = this.files[0];
+                                console.log(a)
+                                var reader = new FileReader();
+                                reader.readAsDataURL(file);
+                                reader.onload = function(e) {
+                                    base64Code = this.result;
+                                    //把得到的base64赋值到img标签显示
+                                    $(a).attr("src", base64Code);
+                                }
+                            })   
+                           } 
+                        </script>
+                        <div class="am-form-group">
+                            <div class="am-u-sm-9 am-u-sm-push-3">
+                                <button class="am-btn am-btn-primary tpl-btn-bg-color-success ">
+                                    保存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
